@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Cash Positive Evaluation Assignment - AngularJS blogging Application</title> 
+
+<link rel="stylesheet" type="text/css" href="css/font.css"/>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+
+<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-animate.js'></script>
+<script src='js/jquery.js'></script>
+<script src='js/responsive.js'></script>
+<script  src='js/index.js'></script>
+  
+</head>
+<!--   
+
+       Web App Begins Here.
+
+-->
+<body>
+  <body ng-app="bApp">
+  
+  <div ng-controller="bController as bg">
+      <div class="tb" style="padding-bottom: 25px;">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-s-4">
+              <h1 ng-click="bg.selectTab('bg')" ng-attr-title="{{bg.desc}}" class="push-left" style="font-size: 25px;padding-top: 12px;">{{bg.title}}</h1>
+            </div>
+
+            
+            <div class="col-m-5 push-right">
+              <nav role='navigation' class="push-right">
+                <ul>
+<!--   
+
+       Menu 
+
+-->
+                  <li><a href="#" class="btn list" ng-click="bg.selectTab('bg')">See All Posts</a></li> |
+                  <li><a href="#" class="btn list" ng-click="bg.selectTab('pg')" >Page View</a></li> |
+                  <li><a href="#" class="btn list" ng-click="bg.selectTab('new')">Add New Post</a></li>
+                </ul>
+              </nav> 
+            </div>
+          </div>
+        </div>
+        
+        
+         
+      </div>
+     
+<!--   
+
+       Page View Begins Here 
+
+-->      
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            
+        <ul class="post-grid" ng-show="bg.isSelected('pg')">
+          <li ng-repeat="post in bg.posts | limitTo:10 " ng-class="{ 'reset-s' : $index%1==0 }" ng-click="bg.selectTab($index)" >
+            <div class="row" style="max-height: 130px;"> <!--   
+
+                                                limitTo:10  Limits the post to 10;
+
+-->
+              <div class="col-md-2">
+                <img src="not.png" width="80%" height="auto" >
+              </div>
+
+              <div class="col-md-9">
+                <h3 ng-attr-title="Posted By {{post.author}}" style="font-size: 20px;">{{post.id}}. {{post.title}}</h3>
+                <h4 style="font-size: 10px;">{{post.date}}</h4>
+            
+            
+                <h4 style="text-align: left;font-size: 10px;">Posted By : {{post.author}}</h4>
+            
+                <p class="fa fa-comment push-right"> &nbsp; {{bg.commentc[post.id]}}</p>
+                <p class="fa fa-heart push-right"> {{bg.likes[post.id]}}  &nbsp;</p>
+              </div>
+            </div>
+            
+          </li>
+        </ul>
+ <!--   
+
+       Page View Ends.... 
+
+-->
+
+
+<!--   
+
+      Grid View Begins.... 
+
+-->
+
+        <ul class="post-grid" ng-show="bg.isSelected('bg')">
+          <li title="Click To View Full Post" ng-repeat="post in bg.posts" class="col-s-4" ng-class="{ 'reset-s' : $index%3==0 }" ng-click="bg.selectTab($index)" >
+            
+            <h3 ng-attr-title="{{post.title}}" class="col-m-6">{{post.id}}. {{post.title}}</h3>
+            <h4 class="col-m-6" style="font-size: 10px;text-align: right;">{{post.date}}</h4>
+            <div ng-if="post.body[$index] != ''">
+                    <p class="col-md-12">{{post.body[$index] | limitTo:20}}</p>
+                  </div>
+
+
+                  <!--   
+
+                      Dummy Text to Display as the json File Does't contain Body of The Posts............... 
+
+-->
+            <p class="col-md-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s......</p>
+            
+            <h3 class="col-md-12 " ng-attr-title="Posted By {{post.author}}" style="text-align: right;font-size: 15px;">Posted By : {{post.author}}</h3>
+            <!-- <p>{{post.body[0] | limitTo:70}}...</p>
+             --><p ng-attr-title="{{bg.commentc[post.id]}} Comments" class="fa fa-comment push-left"> {{bg.commentc[post.id]}}
+            </p>
+            <p ng-attr-title="{{bg.likes[post.id]}} Likes" class="fa fa-heart push-right"> {{bg.likes[post.id]}}
+            </p>
+          </li>
+        </ul>
+<!--   
+
+      Grid View End....... 
+
+-->
+
+
+<!--   
+
+       Detailed View of The Post..... 
+
+-->
+
+    <div class="row">
+        <div class="post" ng-repeat="post in bg.posts" ng-show="bg.isSelected($index)">
+          <div class="col-md-9">
+            
+            <h2>{{post.title}}</h2>
+            <div ng-if="post.body[$index] != ''">
+                    {{post.body[$index]}}
+                  </div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            
+            <blockquote style="font-weight: bold;font-family: timesnewroman;margin-left: 70%;">Posted by <i>{{post.author}}</i> <br>on <i>{{post.date | date}}</i></blockquote>
+            
+            <div class="comments" ng-controller="cController as commentCtrl">
+              <button class="fa fa-heart" ng-click="bg.likes[post.id] = bg.likes[post.id]+1"> {{bg.likes[post.id]}}</button>
+              <h3 class="btn pack" style="font-size: 25px;color:black;">Comments</h3><hr>
+               <div ng-repeat="comment in bg.comments">
+                  <div ng-if="comment.postId == post.id">
+                    <blockquote style="margin-left: 5%;">{{comment.body}}</blockquote>
+                    <div style="text-align: right;">
+                 <span> - Commented By : ( ID/Name ) <b>{{comment.id}}</b></span>
+               </div>
+                  </div>
+                 
+               </div><hr>
+ <!--   
+
+       Add Coment Form.... 
+
+-->             <form name="commentForm" ng-submit="commentForm.$valid && commentCtrl.addComment(bg)">
+                <h4 style="text-align: center;font-size: 25px;color: black;font-weight: normal" class="pack">Add Comment</h4>
+                <div class="form-group">
+                  <br><label class="col-md-3 control-label title1" >Name : </label>
+                  <div class="col-md-8">
+                    <br><input type="text" ng-model="commentCtrl.comment.id" placeholder="Name" required="" />  
+                  </div>
+                </div>
+                <div class="form-group">
+                  <br><label class="col-md-3 control-label title1" >Comment : </label>
+                  <div class="col-md-8">
+                    <br><textarea ng-model="commentCtrl.comment.body" cols="30" rows="10" required=""></textarea>  
+                  </div>
+                </div>
+                <input type="hidden" ng-model="commentCtrl.comment.postId" ng-init="commentCtrl.comment.postId = post.id"/>
+                  
+                <div class="form-group">
+                   <br><label class="col-md-12 control-label title1" ></label>
+                  <div class="col-md-12">
+                    <br><button class="btn btn-block btn-primary" type="submit" value="Submit">SUBMIT</button>  
+                  </div>
+                </div>
+
+                </form>
+ <!--   
+
+      Comment Form End.....
+
+-->
+            </div>
+        </div>
+      </div>
+
+    
+  </div>
+
+
+<!--   
+
+      Adding New Post........
+
+-->
+        <div ng-show="bg.isSelected('new')">
+          <legend><h2 style="text-align: center;">Add New Post </h2></legend>
+          <form name="postForm" ng-submit="postForm.$valid && bg.addPost()" novalidate>
+            <div class="form-group">
+              <br>
+              <br><label class="col-md-3 control-label title1" >Title : </label>
+              <div class="col-md-8">
+                  <br><input type="text" ng-model="bg.post.title" placeholder="Title Of the post" required="" />  
+              </div>
+            </div>
+            <div class="form-group">
+              <br><label class="col-md-3 control-label title1" >Body : </label>
+              <div class="col-md-8">
+              <br><textarea ng-model="bg.post.body" placeholder="Post Body" ng-list="/\n/" rows="10" required=""></textarea>  
+              </div>
+            </div>
+            <div class="form-group">
+              <br><label class="col-md-3 control-label title1" >Author : </label>
+              <div class="col-md-8">
+                  <br><input type="text" ng-model="bg.post.author" placeholder="Author Name" required=""/>  
+              </div>
+            </div>
+            <div class="form-group">
+              <br><label class="col-md-12 control-label title1" ></label>
+              <div class="col-md-12">
+                  <br><button class="btn btn-block btn-primary" type="submit" value="Submit">SUBMIT</button>  
+              </div>
+            </div>
+
+
+                  
+          </form>
+ <!--   
+
+       Add New Post Ends..................
+
+-->         
+            </div>
+            
+          </div>
+        </div>
+        
+    </div>
+  </div>
+  <!--   
+
+      ......................... Footer Credits .......................... 
+
+-->
+<footer style="background-color: #000;color:white;min-height: 100px;text-align: center;padding-top: 25px;"><p class="copy-right">© 2017 <a href="#">Assignment Blog - CASH POSITIVE</a>. All rights reserved | Kishore Reddy -&gt; (<a title="Kishore Reddy" href="https://www.facebook.com/kishore.reddy757" target="_blank"> Facebook </a>|<a title="Kishore Reddy" href="https://www.linkedin.com/in/kishorereddy0510" target="_blank"> LinkedIn </a>)</p></footer>
+</body>
+
+
+
+</html>
